@@ -1,9 +1,26 @@
 import React, {useState, useEffect} from 'react'
+import {connect} from 'react-redux'
 
-const Checkout=()=>{
+const Checkout=(props)=>{
+    let [orderTotal,setOrderTotal]=useState(0);
+
+    useEffect(()=>{
+        setOrderTotal(props.orderTotal)
+    },[props])
+
     return(
-        <h1>Checkout</h1>
+        <div>
+            <h1>Checkout</h1>
+            <p>Total:{orderTotal}</p>
+            <button>Place Order</button>
+        </div>
     )
 }
 
-export default Checkout;
+var mapStateToProps=(state)=>{
+    return {
+        orderTotal:state.shop.orderTotal
+    }
+}
+
+export default connect(mapStateToProps,null)(Checkout);

@@ -36,9 +36,10 @@ const Catalog=(props)=>{
 
     return(
         <div>
+            <h1>Catalog</h1>
             {
                 items.map((item)=>{
-                    return <Item key={item.productid} item={item}/>
+                    return <Item key={item.productid} item={item} isCart={false}/>
                 })
             }
         </div>
@@ -54,7 +55,7 @@ var mapStateToProps=(state)=>{
 }
 
 var mapDispatchToProps={
-    getItems
+    getItems 
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Catalog);

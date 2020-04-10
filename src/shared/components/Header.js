@@ -1,16 +1,19 @@
 import React, {useState, useEffect} from 'react'
+import {
+    Link
+} from 'react-router-dom'
 
 const Header=()=>{
     return(
         <header className="App-header">
             <div>
-                <a href="/">Home</a> | <a href="/">About</a> | <a href="/">Contact</a>
+                <Link to="/">Home</Link> | <Link to="/about">About</Link> | <Link to="/contact">Contact</Link>
             </div>
             <div>
                 <h1>Shop 29</h1>
             </div>
             <div>
-                <a href="/">Register</a> | <a href="/">Login</a>
+            <Link to="/register">Register</Link> | <Link to="/login">Login</Link>
             </div>
         </header>
     )

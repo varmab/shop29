@@ -7,6 +7,7 @@ const Cart=(props)=>{
 
     //equivalent to componentWillReceiveProps
     useEffect(()=>{
+        console.log(props.items)
         setItems(props.items)
     },[props])
 

@@ -46,14 +46,47 @@ let initialCartState={
 export const shop=(state=initialCartState,action)=>{
     switch(action.type){
         case ADD_TO_CART:
-            return {
-                cartItems:[
-                    ...state.cartItems,
-                    action.item
-                ],
-                orderTotal:state.cartItems.reduce((total,item)=>{
-                        return total+item.min_list_price
-                },0) + action.item.min_list_price
+            var isItemExist=state.cartItems.some((currentItem)=>{
+                return currentItem.productid==action.item.productid;
+            })
+
+            if(isItemExist==true){ //existing item
+
+                var existingItem=state.cartItems.find((currentItem)=>{
+                    return currentItem.productid==action.item.productid;
+                });
+
+                var newExistingItem=Object.assign({},existingItem);
+                newExistingItem.qty++;
+
+                var cartItemsWithoutExistingItem=state.cartItems.filter((currentItem)=>{
+                    return currentItem.productid!=existingItem.productid
+                });
+
+                return {
+                    cartItems:[
+                        ...cartItemsWithoutExistingItem,
+                        newExistingItem
+                    ],
+                    orderTotal:state.cartItems.filter((currentItem)=>{
+                                    return currentItem.productid!=existingItem.productid
+                                }).reduce((total,item)=>{
+                                        return total+item.min_list_price*item.qty
+                                },0) + existingItem.min_list_price * existingItem.qty
+                }
+            }
+            else //new item
+            {
+               action.item.qty=1;
+                return {
+                    cartItems:[
+                        ...state.cartItems,
+                        action.item
+                    ],
+                    orderTotal:state.cartItems.reduce((total,item)=>{
+                            return total+item.min_list_price
+                    },0) + action.item.min_list_price
+                }
             }
         case REMOVE_FROM_CART:
             return {
